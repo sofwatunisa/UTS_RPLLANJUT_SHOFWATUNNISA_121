@@ -44,6 +44,7 @@ Proyek ini dikembangkan untuk memenuhi Ujian Tengah Semester (UTS) mata kuliah R
 
 ---
 
+##  Cara Menjalankan Proyek
 
 1. **Clone Repositori**
    ```bash
