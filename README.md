@@ -44,9 +44,8 @@ Proyek ini dikembangkan untuk memenuhi Ujian Tengah Semester (UTS) mata kuliah R
 
 ---
 
-##  Cara Menjalankan Proyek
 
 1. **Clone Repositori**
    ```bash
-   git clone [https://github.com/Shofwatunnisa/UTS_RPLLANJUT_SHOFWATUNNISA_121.git](https://github.com/Shofwatunnisa/UTS_RPLLANJUT_SHOFWATUNNISA_121.git)
+   git clone [https://github.com/sofwatunisa/UTS_RPLLANJUT_SHOFWATUNNISA_121.git](https://github.com/sofwatunisa/UTS_RPLLANJUT_SHOFWATUNNISA_121.git)
    cd UTS_RPLLANJUT_SHOFWATUNNISA_121
