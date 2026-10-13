@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL"
+                  xmlns:camunda="http://camunda.org/schema/1.0/bpmn"
+                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                  id="Definitions_Proposal"
+                  targetNamespace="http://bpmn.io/schema/bpmn">
+<bpmn:process id="PengajuanSkripsiProcess" name="Pengajuan Proposal Skripsi UIN" isExecutable="true" camunda:historyTimeToLive="180">    <bpmn:startEvent id="Start_Pengajuan" name="Mahasiswa Submit Proposal">
+      <bpmn:outgoing>Flow_1</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:sequenceFlow id="Flow_1" sourceRef="Start_Pengajuan" targetRef="Task_VerifikasiSekprodi" />
+    <bpmn:userTask id="Task_VerifikasiSekprodi" name="Verifikasi Kelayakan oleh Sekprodi" camunda:candidateGroups="sekprodi">
+      <bpmn:incoming>Flow_1</bpmn:incoming>
+      <bpmn:outgoing>Flow_2</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:sequenceFlow id="Flow_2" sourceRef="Task_VerifikasiSekprodi" targetRef="Gateway_Layak" />
+    <bpmn:exclusiveGateway id="Gateway_Layak" name="Apakah Layak?">
+      <bpmn:incoming>Flow_2</bpmn:incoming>
+      <bpmn:outgoing>Flow_Ya</bpmn:outgoing>
+      <bpmn:outgoing>Flow_Tidak</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:sequenceFlow id="Flow_Tidak" name="Tidak" sourceRef="Gateway_Layak" targetRef="Task_NotifRevisi">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${isLayak == false}</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:serviceTask id="Task_NotifRevisi" name="Kirim Email Penolakan" camunda:delegateExpression="${emailRevisiService}">
+      <bpmn:incoming>Flow_Tidak</bpmn:incoming>
+      <bpmn:outgoing>Flow_End1</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:endEvent id="End_Ditolak" name="Pengajuan Ditolak">
+      <bpmn:incoming>Flow_End1</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_End1" sourceRef="Task_NotifRevisi" targetRef="End_Ditolak" />
+    <bpmn:sequenceFlow id="Flow_Ya" name="Ya" sourceRef="Gateway_Layak" targetRef="Task_ReviewDosen">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${isLayak == true}</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:userTask id="Task_ReviewDosen" name="Pemeriksaan &amp; Kesediaan Dosen Pembimbing" camunda:candidateGroups="dosen">
+      <bpmn:incoming>Flow_Ya</bpmn:incoming>
+      <bpmn:outgoing>Flow_3</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:sequenceFlow id="Flow_3" sourceRef="Task_ReviewDosen" targetRef="Task_ApproveKaprodi" />
+    <bpmn:userTask id="Task_ApproveKaprodi" name="Persetujuan SK oleh Kaprodi" camunda:candidateGroups="kaprodi">
+      <bpmn:incoming>Flow_3</bpmn:incoming>
+      <bpmn:outgoing>Flow_4</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:sequenceFlow id="Flow_4" sourceRef="Task_ApproveKaprodi" targetRef="End_Disetujui" />
+    <bpmn:endEvent id="End_Disetujui" name="SK Pembimbing Terbit">
+      <bpmn:incoming>Flow_4</bpmn:incoming>
+    </bpmn:endEvent>
+  </bpmn:process>
+</bpmn:definitions>
