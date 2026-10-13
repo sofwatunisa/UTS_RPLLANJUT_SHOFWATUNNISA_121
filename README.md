@@ -3,7 +3,7 @@
 
 ---
 
-## 📌 Identitas Mahasiswa
+##  Identitas Mahasiswa
 * **Nama** : Shofwatunnisa
 * **NIM** : 11210910000121
 * **Program Studi** : Teknik Informatika
@@ -13,10 +13,10 @@
 
 ---
 
-## 🚀 Deskripsi Proyek
+##  Deskripsi Proyek
 Proyek ini dikembangkan untuk memenuhi Ujian Tengah Semester (UTS) mata kuliah Rekayasa Perangkat Lunak Lanjut. Proyek mengintegrasikan **Camunda BPM Engine 7.20.0** ke dalam **Spring Boot Framework 3.3.4** untuk mengotomatisasi alur kerja (*workflow*) berbasis notasi standar BPMN 2.0.
 
-### ⚙️ Spesifikasi Teknologi (*Tech Stack*)
+###  Spesifikasi Teknologi (*Tech Stack*)
 * **Framework**: Spring Boot 3.3.4
 * **BPM Engine**: Camunda BPM Platform 7.20.0 (Webapp Starter)
 * **Java Version**: OpenJDK 21
@@ -25,7 +25,7 @@ Proyek ini dikembangkan untuk memenuhi Ujian Tengah Semester (UTS) mata kuliah R
 
 ---
 
-## 🛠️ Ringkasan Fitur & Pemodelan Proses
+##  Ringkasan Fitur & Pemodelan Proses
 
 ### 1. Pengujian Instalasi (`hello-process.bpmn`)
 * Menguji eksekusi `JavaDelegate` (`HelloDelegate.java`) untuk memastikan konfigurasi Camunda Engine dan Spring Boot berjalan sempurna.
@@ -44,7 +44,7 @@ Proyek ini dikembangkan untuk memenuhi Ujian Tengah Semester (UTS) mata kuliah R
 
 ---
 
-## 💻 Cara Menjalankan Proyek
+##  Cara Menjalankan Proyek
 
 1. **Clone Repositori**
    ```bash
