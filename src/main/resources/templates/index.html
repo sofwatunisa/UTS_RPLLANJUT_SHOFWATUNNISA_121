@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistem Peminjaman Peralatan Ormawa</title>
+    <style>
+        :root {
+            --primary-tosca: #00A896;
+            --secondary-wardah: #00C4D6;
+            --dark-slate: #1E293B;
+            --light-bg: #F8FAFC;
+            --white: #FFFFFF;
+            --border-color: #E2E8F0;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            background-color: var(--light-bg);
+            color: var(--dark-slate);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--primary-tosca), var(--secondary-wardah));
+            color: var(--white);
+            padding: 32px 20px;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        }
+
+        header h1 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            margin-bottom: 6px;
+        }
+
+        header p {
+            font-size: 0.95rem;
+            opacity: 0.9;
+            font-weight: 400;
+        }
+
+        main {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            padding: 40px 20px;
+        }
+
+        .card {
+            background: var(--white);
+            border-radius: 12px;
+            width: 100%;
+            max-width: 540px;
+            padding: 32px;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.01);
+            border: 1px solid var(--border-color);
+        }
+
+        .card-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--dark-slate);
+            margin-bottom: 20px;
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 10px;
+        }
+
+        .alert-success {
+            background-color: #ECFDF5;
+            border: 1px solid #A7F3D0;
+            color: #065F46;
+            padding: 14px 16px;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            margin-bottom: 24px;
+            line-height: 1.4;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: #475569;
+            margin-bottom: 8px;
+        }
+
+        input[type="text"],
+        input[type="number"],
+        input[type="date"] {
+            width: 100%;
+            padding: 11px 14px;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            font-size: 0.95rem;
+            color: var(--dark-slate);
+            outline: none;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+
+        input[type="text"]:focus,
+        input[type="number"]:focus,
+        input[type="date"]:focus {
+            border-color: var(--primary-tosca);
+            box-shadow: 0 0 0 3px rgba(0, 168, 150, 0.15);
+        }
+
+        .form-row {
+            display: flex;
+            gap: 16px;
+        }
+
+        .form-row .form-group {
+            flex: 1;
+        }
+
+        button[type="submit"] {
+            width: 100%;
+            background: linear-gradient(135deg, var(--primary-tosca), var(--secondary-wardah));
+            color: var(--white);
+            border: none;
+            padding: 13px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: opacity 0.2s, transform 0.1s;
+            box-shadow: 0 4px 12px rgba(0, 168, 150, 0.25);
+            margin-top: 8px;
+        }
+
+        button[type="submit"]:hover {
+            opacity: 0.95;
+        }
+
+        button[type="submit"]:active {
+            transform: scale(0.99);
+        }
+
+        .dashboard-link {
+            margin-top: 28px;
+            padding-top: 20px;
+            border-top: 1px dashed var(--border-color);
+            text-align: center;
+        }
+
+        .dashboard-link a {
+            color: var(--primary-tosca);
+            text-decoration: none;
+            font-size: 0.875rem;
+            font-weight: 600;
+            transition: color 0.2s;
+        }
+
+        .dashboard-link a:hover {
+            color: #007A6C;
+            text-decoration: underline;
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            font-size: 0.8rem;
+            color: #94A3B8;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Sistem Peminjaman Peralatan Ormawa</h1>
+    <p>Integrasi Platform Spring Boot dan Pemodelan Proses Bisnis BPMN</p>
+</header>
+
+<main>
+    <div class="card">
+        <h2 class="card-title">Form Pengajuan Peminjaman</h2>
+
+        <div th:if="${successMessage}" class="alert-success" th:text="${successMessage}"></div>
+
+        <form action="/submit-peminjaman" method="post">
+            <div class="form-group">
+                <label for="namaPeminjam">Nama Peminjam / Nama Ormawa</label>
+                <input type="text" id="namaPeminjam" name="namaPeminjam" required placeholder="Masukkan nama instansi atau penanggung jawab">
+            </div>
+
+            <div class="form-group">
+                <label for="namaAlat">Nama Peralatan</label>
+                <input type="text" id="namaAlat" name="namaAlat" required placeholder="Contoh: Sound System, Proyektor, Mikrofon">
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="jumlahAlat">Jumlah (Unit)</label>
+                    <input type="number" id="jumlahAlat" name="jumlahAlat" min="1" value="1" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="tanggalPinjam">Tanggal Peminjaman</label>
+                    <input type="date" id="tanggalPinjam" name="tanggalPinjam" required>
+                </div>
+            </div>
+
+            <button type="submit">Kirim Pengajuan Peminjaman</button>
+        </form>
+
+        <div class="dashboard-link">
+            <a href="/camunda/app/" target="_blank">Akses Dashboard Camunda Webapps (Cockpit &amp; Tasklist) &rarr;</a>
+        </div>
+    </div>
+</main>
+
+<footer>
+    &copy; 2026 Teknik Informatika UIN Syarif Hidayatullah Jakarta
+</footer>
+
+</body>
+</html>
